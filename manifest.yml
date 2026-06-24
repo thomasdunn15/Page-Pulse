@@ -1,0 +1,46 @@
+modules:
+  macro:
+    - key: page-pulse-hello-world-macro
+      resource: main
+      render: native
+      resolver:
+        function: resolver
+      title: Page Pulse
+  confluence:globalSettings:
+    - key: page-pulse-settings
+      resource: settings
+      render: native
+      resolver:
+        function: resolver
+      title: Page Pulse
+  confluence:contentBylineItem:
+    - key: page-pulse-byline
+      resource: byline
+      render: native
+      title: Page review
+      resolver:
+        function: resolver
+      dynamicProperties:
+        function: byline-props
+  function:
+    - key: resolver
+      handler: index.handler
+    - key: byline-props
+      handler: bylineProperties.handler
+resources:
+  - key: main
+    path: src/frontend/index.jsx
+  - key: settings
+    path: src/settings/index.jsx
+  - key: byline
+    path: src/byline/index.jsx
+permissions:
+  scopes:
+    # Lets the app read & write its own key-value storage on Atlassian.
+    - storage:app
+app:
+  runtime:
+    name: nodejs24.x
+    memoryMB: 256
+    architecture: arm64
+  id: ari:cloud:ecosystem::app/ee442069-eacb-4857-a94b-1fd574bbfc36
